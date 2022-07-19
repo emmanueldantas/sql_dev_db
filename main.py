@@ -44,7 +44,6 @@ def insert_sql_server(sqlCommandString, sqlConnectionString):
 postConnectionString_plataforma = os.environ['postgre_connection_string_plataforma']
 postConnectionString_pipedrive = os.environ['postgre_connection_string_pipedrive']
 
-
 # Obtém tabelas com os dados do pipe de 2 bancos diferentes
 data_table_plataforma = fetch(
     postConnectionString_plataforma,  
@@ -57,7 +56,7 @@ data_table_plataforma = fetch(
 data_table_pipedrive = fetch(
     postConnectionString_pipedrive,  
     postgre_command(
-        columns=['id', 'value', '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"'],
+        columns=['id', 'title', 'value', '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"'],
         table='public.carganegocios3'
     )
 )
@@ -78,7 +77,7 @@ records = json.dumps(
 )
 
 
-#Envia JSON para o banco
+# Envia JSON para o banco
 response = insert_sql_server(
     sqlCommandString=sqlserver_command(records), 
     sqlConnectionString=os.environ['sqlserver_connection_string']

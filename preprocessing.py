@@ -94,6 +94,7 @@ def clean_data_plataforma(dt):
 def clean_data_pipedrive(dt):
     columns=[
         'key_id_cliente',
+        'key_nome_cliente',
         'key_potencia_vendida_w',
         'key_centro_custo',
         'key_geracao_vendida'
@@ -103,6 +104,7 @@ def clean_data_pipedrive(dt):
     df = keep_best_duplicated_rows(df, subset=['key_id_cliente'])
     df = df.applymap(fix_nones)
 
+    df['key_nome_cliente'] = df['key_nome_cliente'].str.replace("'", '').replace('"', "")
     df['key_id_cliente'] = df['key_id_cliente'].astype(int)
     df['key_potencia_vendida_w'] = df['key_potencia_vendida_w'].apply(to_wp)
     df['key_centro_custo'] = df['key_centro_custo'].apply(get_cc)
@@ -115,8 +117,10 @@ def clean_data_pipedrive(dt):
 
 
 def merge_bases(main_df, secondary_df, on='key_id_cliente'):
+    merged_df = secondary_df.merge(main_df[on], how='outer')
+    
     main_df = main_df.set_index(on) 
-    secondary_df = secondary_df.set_index(on) 
+    secondary_df = merged_df.set_index(on) 
     secondary_df.update(main_df)
     secondary_df = secondary_df.reset_index(level=0)
     return secondary_df.replace(np.NaN, None).copy()
