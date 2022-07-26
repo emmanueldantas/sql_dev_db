@@ -56,7 +56,7 @@ data_table_plataforma = fetch(
 data_table_pipedrive = fetch(
     postConnectionString_pipedrive,  
     postgre_command(
-        columns=['id', 'title', 'value', '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"'],
+        columns=['id', 'title', 'value', '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"', 'stage_id'],
         table='public.carganegocios3'
     )
 )
@@ -73,9 +73,12 @@ df = merge_bases(
 # Transforma os dados em JSON
 records = json.dumps(
     df.to_dict('records'), 
-    default=str
+    default=str,
+    indent=2
 )
 
+with open(r'C:\Users\emmanuel.dantas.INSOLE\Desktop\Nova pasta\sqltables.txt', 'w') as f:
+    f.write(records)
 
 # Envia JSON para o banco
 response = insert_sql_server(

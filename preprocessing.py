@@ -13,7 +13,8 @@ default_columns = [
     'key_funil_atual',
     'key_data_ganho',
     'key_data_registro',
-    'key_centro_custo'
+    'key_centro_custo',
+    'key_id_stage'
 ]
 
 keep_firs_part = lambda x: str(x).split(' ')[0]
@@ -97,7 +98,8 @@ def clean_data_pipedrive(dt):
         'key_nome_cliente',
         'key_potencia_vendida_w',
         'key_centro_custo',
-        'key_geracao_vendida'
+        'key_geracao_vendida',
+        'key_id_stage'
     ]
 
     df = to_dataframe(columns, dt)
