@@ -14,7 +14,9 @@ default_columns = [
     'key_data_ganho',
     'key_data_registro',
     'key_centro_custo',
-    'key_id_stage'
+    'key_id_stage',
+    'key_data_assinatura_contrato',
+    'key_status'
 ]
 
 keep_firs_part = lambda x: str(x).split(' ')[0]
@@ -99,7 +101,9 @@ def clean_data_pipedrive(dt):
         'key_potencia_vendida_w',
         'key_centro_custo',
         'key_geracao_vendida',
-        'key_id_stage'
+        'key_id_stage',
+        'key_data_assinatura_contrato',
+        'key_status'
     ]
 
     df = to_dataframe(columns, dt)
@@ -113,6 +117,7 @@ def clean_data_pipedrive(dt):
     df['key_geracao_vendida'] = df['key_geracao_vendida'].apply(find_nan)
     df['key_geracao_vendida'] = df['key_geracao_vendida'].apply(keep_firs_part)
     df['key_geracao_vendida'] = df['key_geracao_vendida'].apply(convert_to_float)
+    df['key_data_assinatura_contrato'] = df['key_data_assinatura_contrato'].apply(filter_name)
 
     df = create_missing_columns(df)  
     return df.copy()

@@ -56,7 +56,16 @@ data_table_plataforma = fetch(
 data_table_pipedrive = fetch(
     postConnectionString_pipedrive,  
     postgre_command(
-        columns=['id', 'title', 'value', '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"', 'stage_id'],
+        columns=[
+            'id', 
+            'title', 
+            'value', 
+            '"50b1fffdfe0575276a5d03c80014aa41c14c4369"', 
+            '"40a0d047040b5cd0cc54962eecb1b6d8ced865c4"', 
+            'stage_id',
+            'bdc3951a9c92be43215c35c3746a910aa1f7f067',
+            'status'
+        ],
         table='public.carganegocios3'
     )
 )
@@ -76,6 +85,7 @@ records = json.dumps(
     default=str,
     indent=2
 )
+
 
 with open(r'C:\Users\emmanuel.dantas.INSOLE\Desktop\Nova pasta\sqltables.txt', 'w') as f:
     f.write(records)
